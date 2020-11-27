@@ -23,7 +23,7 @@ To see how the algorithm works, execute the `main.py` program:
 ```
   python3 main.py
 ```
-Note that you to have `pygame` installed. 
+Note that you to have `pygame` installed ([How to install pygame](https://www.pygame.org/wiki/GettingStarted)). 
 
 **Don't want to download the program? Try it in Gitpod!** 
 
