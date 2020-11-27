@@ -9,11 +9,11 @@ starting from a specific starting node of a graph,
 it aims to find a path to the given goal node having the smallest cost 
 (least distance travelled, etc.). 
 
-A* select the shortest path that minimizes the funciton:
+A* select the shortest path that minimizes the function:
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=f(n)&space;=&space;g(n)&space;&plus;&space;h(n)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?f(n)&space;=&space;g(n)&space;&plus;&space;h(n)" title="f(n) = g(n) + h(n)" /></a>
 
 where `n` is the current node in the graph, `g(n)` is the cost of the path from the start node to `n`, 
-`h(n)` is a heuristic funciton that estimate the minimum cost from the current node to the goal. 
+`h(n)` is a heuristic function that estimate the minimum cost from the current node to the goal. 
 If you want to know more, please check [here](https://en.wikipedia.org/wiki/A*_search_algorithm). 
 
