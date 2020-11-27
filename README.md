@@ -27,7 +27,7 @@ Note that you to have `pygame` installed.
 
 **Don't want to download the program? Try it in Gitpod!** 
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://github.com/ShiqiHe000/A_start_pathfinding_algorithm/main.py)
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/ShiqiHe000/A_start_pathfinding_algorithm/main.py)
 
 ## How to Play?
 Use you mouse to choose the **start point** (first clik, orange node) and **end point** (second clik, blue node). 
