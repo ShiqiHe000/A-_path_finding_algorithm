@@ -17,3 +17,24 @@ where `n` is the current node in the graph, `g(n)` is the cost of the path from 
 `h(n)` is a heuristic function that estimate the minimum cost from the current node to the goal. 
 If you want to know more, please check [here](https://en.wikipedia.org/wiki/A*_search_algorithm). 
 
+# Want to Play with the Program?
+To see how the algorithm works, execute the `main.py` program:
+
+```
+  python3 main.py
+```
+Note that you to have `pygame` installed. 
+
+**Don't want to download the program? Try it in Gitpod!**
+
+
+## How to Play?
+Use you mouse to choose the **start point** (first clik, orange node) and **end point** (second clik, blue node). 
+Then press the left key and feel free to draw the **barriers** (black nodes) bewtween the start node and end node. 
+
+When you finished, press space key to see the algorithm processes and find the shortest path between two targeted node.
+In the end, the shortest path will be colored in purple. To restart the program, press `c`. 
+
+<p align="center">
+  <img src="./imgs/example.png" width="300" height = "300" class="center">
+</p>
