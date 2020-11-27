@@ -12,11 +12,12 @@ BLUE = (50, 140, 250)
 YELLOW = (255, 255, 0)
 WHITE = (255, 255, 255) # has not been visited
 BLACK = (0, 0, 0)   # a barrier
-PURPLE = (128, 0, 128)  # the path
+PURPLE = (167, 95, 250)  # the path
 ORANGE = (255, 165, 0)  # start node
 GREY = (128, 128, 128)
 TURQUOISE = (64, 224, 208)  # the end node
 
+# each cube
 class Spot:
     def __init__(self, row, col, width, total_rows):
         self.row = row
@@ -103,6 +104,14 @@ def h(p1, p2):
     row2, col2 = p2
     return abs(row1 - row2) + abs(col1 - col2)
 
+# We find the shortest path! Now is time to draw the shortest path on the screen.
+# came_from: a dictionary current_spot: previous_spot
+def reconstruct_path(came_from, current, draw):
+    while current in came_from:
+        current = came_from[current]
+        current.make_path()
+        draw()
+
 # draw: lambda function to draw the surface
 # grid: the 2d list of the grid
 # start: the start spot
@@ -132,7 +141,7 @@ def algorithm(draw, grid, start, end):
         open_set_hash.remove(current)
 
         if current == end:  # we found the shortest path
-            # todo: make path
+            reconstruct_path(came_from, end, draw)
             return True
 
         for neighbor in current.neighbors:
@@ -145,7 +154,8 @@ def algorithm(draw, grid, start, end):
                     count += 1
                     open_set.put((f_score[neighbor], count, neighbor))
                     open_set_hash.add(neighbor)
-                    neighbor.make_open()  # put this neighbour in open_set
+                    if neighbor != end:
+                        neighbor.make_open()  # put this neighbour in open_set
 
         draw()
 
@@ -209,6 +219,50 @@ def get_click_position(pos, rows, width):
 
     return row, col
 
+# Print "Press c to Reset on teh screen"
+# win: pygame surface
+# width: domain width
+def reset_text(win, width):
+
+    # init font
+    pygame.font.init()
+
+    font_size = 80  # the size of the font
+    no_path_font = pygame.font.SysFont('Times', font_size) # set font size and style
+    font_surface = no_path_font.render('Press c To Restart', False, BLACK)   # render the text into a surface.
+
+    # draw the text in the middle of x direction
+    text_width_half = font_surface.get_width() / 2 # half of the width of the text
+    text_height = font_surface.get_height() # the height of the text
+    win.blit(font_surface, (width / 2 - text_width_half, width - text_height))
+    pygame.display.update()
+    pygame.time.delay(2000)     # display the text for 3 second.
+
+
+# if no path is found, then print "No Path was Found" on the screen.
+# win: the surface
+# width: domain width
+def no_path_text(win, width):
+    # init font
+    pygame.font.init()
+
+    font_size = 60  # the size of the font
+    no_path_font = pygame.font.SysFont('Times', font_size) # set font size and style
+    no_path_text = no_path_font.render('No Path was Found', False, BLACK)   # render the text into a surface.
+    continue_text = no_path_font.render('Press c To Continue', False, BLACK)
+
+    # draw the text in the middle of x direction
+    no_path_text_width_half = no_path_text.get_width() / 2 # half of the width of the text
+    no_path_text_height = no_path_text.get_height()
+    continue_text_width_half = continue_text.get_width() / 2
+    win.blit(no_path_text, (width / 2 - no_path_text_width_half, 0))
+    win.blit(continue_text, (width / 2 - continue_text_width_half, no_path_text_height))
+    pygame.display.update()
+    pygame.time.delay(2000)     # display the text for 3 second.
+
+# main program
+# win: pygame surface
+# width: domain width.
 def main(win, width):
     ROWS = 50   # COLS = ROWS
     grid = make_grid(ROWS, width)
@@ -218,16 +272,12 @@ def main(win, width):
     end = None
 
     run = True  # run the main loop or not
-    started = False # we started the algorithm or not
 
     while run:
         draw(win, grid, ROWS, width)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
-            if started:
-                continue    # if the algorithm is started,
-                            # we don't want the user to input anymore (except quit).
             if pygame.mouse.get_pressed()[0]: # left button
                 pos = pygame.mouse.get_pos()
                 row, col = get_click_position(pos, ROWS, width)
@@ -252,14 +302,22 @@ def main(win, width):
                     end = None
 
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE and (not started):    # start running the algorithm
-                    started = True
+                if event.key == pygame.K_SPACE and start and end:    # start running the algorithm
                     for row in grid:
                         for spot in row:
                             spot.update_neighbors(grid)
 
                     # call algorithm
-                    algorithm(lambda: draw(win, grid, ROWS, width), grid, start, end)
+                    find = algorithm(lambda: draw(win, grid, ROWS, width), grid, start, end)
+                    if not find:    # cannot reach the end point
+                        no_path_text(win, width) # print out the end point cannot be reached
+                    else:
+                        reset_text(win, width)
+                # clear the screen and restart
+                if event.key == pygame.K_c:
+                    start = None
+                    end = None
+                    grid = make_grid(ROWS, width)
 
     pygame.quit()   # exit the pygame window
 
