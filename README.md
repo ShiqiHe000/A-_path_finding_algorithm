@@ -30,12 +30,16 @@ Note that you to have `pygame` installed ([How to install pygame](https://www.py
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/ShiqiHe000/A_start_pathfinding_algorithm/main.py)
 
 ## How to Play?
-Use you mouse to choose the **start point** (first clik, orange node) and **end point** (second clik, blue node). 
-Then press the left key and feel free to draw the **barriers** (black nodes) bewtween the start node and end node. 
+1. Use you mouse to choose (left clik) a **start point**. This point will be colored in orange. 
+    Note that if you want to erase your choice, just right clik the point. 
+2. Use you mouse to choose a **end point**. This point will be colored in blue. 
+3. Press the left key of your mouse and draw the **barrers** between the start and end points. The bariiers will be colored in black. 
+4. When you finished, press space key to see the algorithm processes and find the shortest path between two targeted node.
+    In the end, the shortest path will be colored in purple. 
+5. To restart the program, press `c`. 
 
-When you finished, press space key to see the algorithm processes and find the shortest path between two targeted node.
-In the end, the shortest path will be colored in purple. To restart the program, press `c`. 
 
+Performance example:
 <p align="center">
   <img src="./imgs/example.png" width="300" height = "300" class="center">
 </p>
